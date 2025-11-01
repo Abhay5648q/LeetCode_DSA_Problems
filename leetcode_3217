@@ -1,0 +1,50 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+import java.util.*;
+
+public class Solution {
+
+    /**
+     * Removes all nodes from the linked list whose values are present in the nums array.
+     *
+     * @param nums array of integers whose matching nodes need to be removed
+     * @param head head of the linked list
+     * @return modified linked list after deletions
+     */
+    public ListNode modifiedList(int[] nums, ListNode head) {
+        // Store all nums in a HashSet for O(1) lookup
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+
+        // Dummy node simplifies edge cases (like removing the head)
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode prev = dummy;
+        ListNode curr = head;
+
+        // Traverse and remove matching nodes
+        while (curr != null) {
+            if (map.containsKey(curr.val)) {
+                prev.next = curr.next; // skip current node
+            } else {
+                prev = curr; // move prev forward
+            }
+            curr = curr.next;
+        }
+
+        // Return new head
+        return dummy.next;
+    }
+}
