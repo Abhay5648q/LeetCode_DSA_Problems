@@ -1,0 +1,74 @@
+/**
+ * LeetCode Problem:Next Greater Numerically Balanced Number
+ * 
+ * Problem Description:
+ * A number is considered "beautiful" if the frequency of each digit in the number 
+ * equals the digit itself. For example, 22 is beautiful because the digit '2' appears twice.
+ * 
+ * Given an integer n, find the smallest beautiful number that is greater than n.
+ * 
+ * Approach:
+ * - Use recursive backtracking to generate all beautiful numbers up to 1224444.
+ * - Store valid numbers in a list, sort it, and then find the smallest number greater than n.
+ * 
+ * Time Complexity: O(1) — The range of generated numbers is small and fixed.
+ * Space Complexity: O(1) — The total number of valid numbers is bounded.
+ * 
+ * Author: Abhay Singh
+ * GitHub: https://github.com/Abhay5648q
+ */
+
+import java.util.*;
+
+public class Solution {
+
+    public int nextBeautifulNumber(int n) {
+        List<Integer> beautifulNumbers = new ArrayList<>();
+        generateNumbers(0, new int[10], beautifulNumbers);
+        Collections.sort(beautifulNumbers);
+
+        for (int num : beautifulNumbers) {
+            if (num > n) return num;
+        }
+        return -1;
+    }
+
+    /**
+     * Recursively generates all "beautiful" numbers up to 1224444.
+     */
+    private void generateNumbers(long current, int[] digitCount, List<Integer> beautifulNumbers) {
+        if (current > 0 && isBeautiful(digitCount)) {
+            beautifulNumbers.add((int) current);
+        }
+
+        // Upper bound for 7-digit beautiful numbers
+        if (current > 1224444) return;
+
+        for (int d = 1; d <= 7; d++) {
+            if (digitCount[d] < d) {
+                digitCount[d]++;
+                generateNumbers(current * 10 + d, digitCount, beautifulNumbers);
+                digitCount[d]--;
+            }
+        }
+    }
+
+    /**
+     * Checks whether the number formed by current digit counts is "beautiful".
+     */
+    private boolean isBeautiful(int[] digitCount) {
+        for (int d = 1; d <= 7; d++) {
+            if (digitCount[d] != 0 && digitCount[d] != d) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Example usage
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int n = 3000;
+        System.out.println("Next Beautiful Number after " + n + " is: " + solution.nextBeautifulNumber(n));
+    }
+}
