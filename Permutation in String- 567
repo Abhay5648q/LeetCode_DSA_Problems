@@ -1,0 +1,41 @@
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        if(s1.length()>s2.length()){
+            return false;
+        }
+        int low=0;
+        int s1arr[]=new int[26];
+        int s2arr[]=new int[26];
+            int k=s1.length();
+    
+        for(int i=0;i<s1.length();i++){
+            char c=s1.charAt(i);
+            s1arr[c-'a']++;
+        }
+        for(int high=0;high<s2.length();high++){
+            char ch=s2.charAt(high);
+            s2arr[ch-'a']++;
+          
+        if(high-low+1>k){
+            char c=s2.charAt(low);
+            s2arr[c-'a']--;
+            low++;
+        }
+        if(high-low+1==k){
+           if(check(s1arr,s2arr)){
+            return true;
+           }
+        }
+        }
+     
+return false;
+    }
+    public boolean check(int arr1[],int arr2[]){
+         for(int i=0;i<26;i++){
+            if(arr1[i]>arr2[i]){
+                return false;
+            }
+         }
+         return true;
+    }
+}
