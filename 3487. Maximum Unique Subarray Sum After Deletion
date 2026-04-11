@@ -1,0 +1,23 @@
+import java.util.*;
+
+class Solution {
+    public int maxSum(int[] nums) {
+      HashSet<Integer>set=new HashSet<>();
+      int sum=0;
+      int minMax=Integer.MIN_VALUE;
+      boolean isPositive=false;
+      for(int val:nums){
+            if(val>0){
+                isPositive=true;
+                set.add(val);
+            }
+            else{
+                minMax=Math.max(minMax,val);
+            }
+      }
+      for(int num:set){
+        sum+=num;
+      }
+      return isPositive?sum:minMax;
+    }
+}
