@@ -1,0 +1,18 @@
+class Solution {
+    public int countMajoritySubarrays(int[] nums, int target) {
+        int count=0;
+        for(int low=0;low<nums.length;low++){
+            HashMap<Integer,Integer>map=new HashMap<>();
+            for(int high=low;high<nums.length;high++){
+                map.put(nums[high],map.getOrDefault(nums[high],0)+1);
+                if(map.containsKey(target)){
+                    int size=high-low+1;
+                    if(map.get(target)>size/2){
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+}
