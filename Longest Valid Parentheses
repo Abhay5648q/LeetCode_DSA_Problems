@@ -1,0 +1,40 @@
+import java.util.*;
+
+class LongestValidParentheses {
+    public int validParentheses(String s) {
+        Stack<Integer> st = new Stack<>();
+         st.push(-1);
+        int maxLen = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            if(s.charAt(i) == '(') {
+                 st.push(i);
+            } 
+            else {
+                st.pop();
+                if (st.isEmpty())
+                 {
+                    st.push(i);
+                }
+             else 
+                {
+                    maxLen = Math.max(maxLen, i - st.peek());
+                }
+            }
+        }
+        return maxLen;
+    }
+
+    public static void main(String[] args) {
+        LongestValidParentheses obj = new LongestValidParentheses();
+        Scanner sc = new Scanner(System.in);
+
+         System.out.print("Enter string (only '(' and ')'): ");
+        String s = sc.nextLine();
+
+        int result = obj.validParentheses(s);
+        System.out.println("Longest valid parentheses length: " + result);
+
+        sc.close();
+    }
+}
