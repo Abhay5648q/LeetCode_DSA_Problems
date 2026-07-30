@@ -1,0 +1,49 @@
+class Solution {
+    public int minimumPushes(String word) {
+        int count = 0;
+        int len = word.length();
+        int ans = 0;
+        while (len > 0) {
+            if (len <= 8&&count==0) {
+                ans += len;
+                len -= len;
+
+            } 
+            else {
+                if (count == 0) {
+                    ans += 8;
+                    len -= 8;
+                    count++;
+                }
+
+                else if (count == 1) {
+                    if(len>8){
+                       ans += 16;
+                       len -= 8;
+                       count++;
+                    }
+                    else{
+                        ans+=len*2;
+                        len-=len;
+                        count++;
+                    }
+                } else if (count == 2) {
+                   if(len>8){
+                    ans+=24;
+                    len-=8;
+                    count++;
+                   }else {
+                    ans+=len*3;
+                    len-=len;
+                    count++;
+                   }
+                }
+                else if(count==3){
+                    ans+=len*4;
+                    len-=len;
+                }
+            }
+        }
+        return ans;
+    }
+}
