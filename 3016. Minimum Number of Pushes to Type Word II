@@ -1,0 +1,35 @@
+class Solution {
+    public int minimumPushes(String word) {
+        int count=0;
+        int ans=0;
+      Map<Character,Integer>map=new HashMap<>();
+      for(int i=0;i<word.length();i++){
+        char ch=word.charAt(i);
+        map.put(ch,map.getOrDefault(ch,0)+1);
+      }
+      List<Character>list=new ArrayList<>(map.keySet());
+      Collections.sort(list,(a,b)->map.get(b)-map.get(a));
+      for(int i=0;i<list.size();i++){
+   
+       char ch=list.get(i);
+            if(count<8){
+                ans+=map.get(ch);
+                count++;
+            }
+            else if(count<16){
+                ans+=map.get(ch)*2;
+                count++;
+            }
+            else if(count<24){
+                ans+=map.get(ch)*3;
+                count++;
+            }
+            else if(count>=24){
+                ans+=map.get(ch)*4;
+                
+            }
+            
+        }
+        return ans;
+    }
+}
